@@ -8,7 +8,7 @@
     <meta name="theme-color" content="#000000" />
     <meta name="color-scheme" content="dark" />
     <meta property="og:title" content="Niu Lai Watch Tracker" />
-    <meta property="og:description" content="Watch the film, pick subtitles, find theatres, and track public views and China tickets." />
+    <meta property="og:description" content="Watch the film, find theatres, and track public views and China tickets." />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://i.ytimg.com/vi/NDOqyb5VSdA/maxresdefault.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -35,7 +35,7 @@
 
       <article class="cinema-stage">
         <div id="cinema-screen" class="cinema-screen">
-          <button type="button" class="cinema-play" id="play" aria-label="Play Niu Lai, full version, English subtitles">
+          <button type="button" class="cinema-play" id="play" aria-label="Play Niu Lai, full version">
             <img
               id="poster"
               src="https://i.ytimg.com/vi/NDOqyb5VSdA/maxresdefault.jpg"
@@ -54,36 +54,12 @@
         <p class="sr-only" id="status" aria-live="polite"></p>
 
         <div class="control-row">
-          <div class="sub-bar">
-            <label for="subtitles">Subtitles</label>
-            <select id="subtitles" autocomplete="off">
-              <option value="off">Off</option>
-              <option value="en" selected>English</option>
-              <option value="es">Spanish</option>
-              <option value="pt">Portuguese</option>
-              <option value="fr">French</option>
-              <option value="de">German</option>
-              <option value="it">Italian</option>
-              <option value="id">Indonesian</option>
-              <option value="vi">Vietnamese</option>
-              <option value="th">Thai</option>
-              <option value="ja">Japanese</option>
-              <option value="ko">Korean</option>
-              <option value="hi">Hindi</option>
-              <option value="ar">Arabic</option>
-              <option value="ru">Russian</option>
-              <option value="tr">Turkish</option>
-              <option value="pl">Polish</option>
-              <option value="nl">Dutch</option>
-            </select>
-          </div>
           <nav class="jump-nav" aria-label="On this page">
             <a href="#theatres">Theatres</a>
             <a href="#tracker">Tracker</a>
             <a href="#search">Search</a>
           </nav>
         </div>
-        <p class="sub-note" id="sub-note">English uses the dedicated subtitled upload. Other languages use the original film plus YouTube captions.</p>
 
         <section class="film-reel" id="film-clips" aria-labelledby="reel-heading">
           <header class="split-head">
@@ -253,7 +229,7 @@
             <p class="card-kicker">Runtime</p>
             <h3>86 minutes</h3>
             <p class="card-value">Mandarin audio</p>
-            <p class="card-detail">Captions are yours to pick on this page. English uses a dedicated subtitled upload.</p>
+            <p class="card-detail">This page plays the English-subbed YouTube upload.</p>
           </article>
         </div>
       </section>
@@ -312,13 +288,6 @@
           </p>
         </header>
         <div id="trends-embed" class="trends-frame" role="img" aria-label="Google Trends chart for the search term Niu Lai"></div>
-        <p class="cinema-actions">
-          <a class="cinema-action" href="https://trends.google.com/trends/explore?date=2026-08-05%202026-08-22&q=Niu%20Lai&hl=en" target="_blank" rel="noopener noreferrer">
-            Open Google Trends
-            <span class="sr-only"> (opens in a new tab)</span>
-          </a>
-          <button type="button" class="cinema-action cinema-action-ghost" id="share" aria-live="polite">Share tracker</button>
-        </p>
       </section>
 
       <footer class="view-dock" aria-labelledby="view-dock-heading">
@@ -328,7 +297,6 @@
         <p class="view-dock-note">How many people came to this site. Refreshing does not add another person.</p>
       </footer>
     </main>
-    <script src="./captions.js"></script>
     <script src="./app.js"></script>
     <script src="https://ssl.gstatic.com/trends_nrtr/4116_RC01/embed_loader.js" defer></script>
   </body>
