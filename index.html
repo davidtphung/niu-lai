@@ -7,11 +7,60 @@
     <meta name="description" content="A handmade animated film by two people, a director and his mother. English subtitles play in the video." />
     <meta name="theme-color" content="#000000" />
     <meta name="color-scheme" content="dark" />
+    <meta property="og:title" content="Niu Lai · Full version · English subtitles" />
+    <meta property="og:description" content="A handmade animated film by two people, a director and his mother. English subtitles play in the video." />
+    <meta property="og:type" content="video.other" />
+    <meta property="og:image" content="https://i.ytimg.com/vi/NDOqyb5VSdA/maxresdefault.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Niu Lai · Full version · English subtitles" />
+    <meta name="twitter:description" content="A handmade animated film by two people, a director and his mother. English subtitles play in the video." />
+    <meta name="twitter:image" content="https://i.ytimg.com/vi/NDOqyb5VSdA/maxresdefault.jpg" />
     <link rel="preconnect" href="https://www.youtube.com" />
     <link rel="preconnect" href="https://i.ytimg.com" />
+    <link rel="preconnect" href="https://api.counterapi.dev" />
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <p>Redirecting to the cinema page.</p>
-    <script>location.replace(location.pathname.endsWith('/') ? '.' : './');</script>
+    <main class="cinema">
+      <a href="#cinema-screen" class="skip-link">Skip to video</a>
+      <header class="cinema-top">
+        <p class="cinema-mark" translate="no">牛来</p>
+        <p class="view-count" aria-live="polite">
+          <span class="view-count-num" id="views">…</span>
+          <span> views</span>
+        </p>
+      </header>
+      <article class="cinema-stage">
+        <div id="cinema-screen" class="cinema-screen">
+          <button type="button" class="cinema-play" id="play" aria-label="Play Niu Lai, full version, English subtitles">
+            <img id="poster" src="https://i.ytimg.com/vi/NDOqyb5VSdA/maxresdefault.jpg" alt="" width="1280" height="720" fetchpriority="high" />
+            <span class="cinema-play-mark" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path d="M10 7.2v13.6L21.2 14 10 7.2Z" fill="currentColor" />
+              </svg>
+            </span>
+          </button>
+        </div>
+        <p class="sr-only" id="status" aria-live="polite"></p>
+        <div class="cinema-meta">
+          <h1 class="cinema-title">Niu Lai</h1>
+          <p class="cinema-line">Full version · English subtitles</p>
+          <p class="cinema-copy">A handmade animated film by two people, a director and his mother. English subtitles play in the video.</p>
+          <dl class="cinema-facts">
+            <div class="cinema-fact"><dt>Made by</dt><dd>Two people</dd></div>
+            <div class="cinema-fact"><dt>Time</dt><dd>Five years</dd></div>
+            <div class="cinema-fact"><dt>Captions</dt><dd>English</dd></div>
+          </dl>
+          <div class="cinema-actions">
+            <button type="button" class="cinema-action" id="share" aria-live="polite">Share</button>
+            <a class="cinema-action cinema-action-ghost" href="https://www.youtube.com/watch?v=NDOqyb5VSdA" target="_blank" rel="noopener noreferrer">
+              Open on YouTube
+              <span class="sr-only"> (opens in a new tab)</span>
+            </a>
+          </div>
+        </div>
+      </article>
+    </main>
+    <script src="./app.js"></script>
   </body>
 </html>
