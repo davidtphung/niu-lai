@@ -1,58 +1,21 @@
 const ENGLISH_ID = "NDOqyb5VSdA";
-const ORIGINAL_ID = "5XdeI0cOWSs";
 const POSTER_HQ = "https://i.ytimg.com/vi/" + ENGLISH_ID + "/hqdefault.jpg";
 const PAGE_VIEWS = "https://api.counterapi.dev/v1/niulai/watch";
 const RELEASE = new Date("2026-08-05T00:00:00+08:00");
 const seenKey = "niu-lai-viewed";
-const langKey = "niu-lai-subs";
-const LANG_NAMES = {
-  off: "off",
-  en: "English",
-  es: "Spanish",
-  pt: "Portuguese",
-  fr: "French",
-  de: "German",
-  it: "Italian",
-  id: "Indonesian",
-  vi: "Vietnamese",
-  th: "Thai",
-  ja: "Japanese",
-  ko: "Korean",
-  hi: "Hindi",
-  ar: "Arabic",
-  ru: "Russian",
-  tr: "Turkish",
-  pl: "Polish",
-  nl: "Dutch",
-};
 
-function currentLang() {
-  const select = document.getElementById("subtitles");
-  const value = select && LANG_NAMES[select.value] ? select.value : "en";
-  return value;
-}
-
-function embedUrl(lang, start) {
-  const useEnglishFile = lang === "en";
-  const id = useEnglishFile ? ENGLISH_ID : ORIGINAL_ID;
+function embedUrl(start) {
   const params = new URLSearchParams({
     autoplay: "1",
     rel: "0",
     modestbranding: "1",
     playsinline: "1",
     enablejsapi: "1",
+    cc_load_policy: "1",
+    cc_lang_pref: "en",
   });
-  if (lang !== "off") {
-    params.set("cc_load_policy", "1");
-    params.set("cc_lang_pref", lang);
-  }
   if (start && start > 1) params.set("start", String(Math.floor(start)));
-  return "https://www.youtube.com/embed/" + id + "?" + params.toString();
-}
-
-function playerTitle(lang) {
-  if (lang === "off") return "Niu Lai, full version. Subtitles are off.";
-  return "Niu Lai, full version. Subtitles in " + LANG_NAMES[lang] + ".";
+  return "https://www.youtube.com/embed/" + ENGLISH_ID + "?" + params.toString();
 }
 
 const SOURCES = [
@@ -347,7 +310,7 @@ const THEATRES = [
     kicker: "This page",
     title: "Watch here",
     value: "YouTube player",
-    detail: "Full 86-minute film. Pick a subtitle language above. Playback does not come from a personal computer.",
+    detail: "Full 86-minute film on this page. Playback does not come from a personal computer.",
     href: "#cinema-screen",
     link: "Jump to player",
     local: true,
@@ -505,34 +468,16 @@ function bindFilters() {
 }
 
 function mountPlayer(start) {
-  const lang = currentLang();
   const screen = document.getElementById("cinema-screen");
   const iframe = document.createElement("iframe");
   iframe.id = "player";
-  iframe.src = embedUrl(lang, start);
-  iframe.title = playerTitle(lang);
+  iframe.src = embedUrl(start);
+  iframe.title = "Niu Lai, full version.";
   iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen";
   iframe.referrerPolicy = "strict-origin-when-cross-origin";
   iframe.allowFullscreen = true;
   screen.replaceChildren(iframe);
-  document.getElementById("status").textContent =
-    lang === "off" ? "Video playing. Subtitles are off." : "Video playing. Subtitles set to " + LANG_NAMES[lang] + ".";
-}
-
-function restoreLang() {
-  const select = document.getElementById("subtitles");
-  const fromUrl = new URLSearchParams(window.location.search).get("subs");
-  const stored = window.localStorage.getItem(langKey);
-  const next = LANG_NAMES[fromUrl] ? fromUrl : LANG_NAMES[stored] ? stored : "en";
-  select.value = next;
-}
-
-function rememberLang(lang) {
-  try { window.localStorage.setItem(langKey, lang); } catch {}
-  const url = new URL(window.location.href);
-  if (lang === "en") url.searchParams.delete("subs");
-  else url.searchParams.set("subs", lang);
-  window.history.replaceState(null, "", url.pathname + url.search + url.hash);
+  document.getElementById("status").textContent = "Video playing.";
 }
 
 function clock(sec) {
@@ -601,56 +546,12 @@ function selectClip(id, play) {
   if (play) mountPlayer(clip.start);
 }
 
-restoreLang();
 renderTheatres("all");
 bindFilters();
 renderReel();
 
 document.getElementById("play").addEventListener("click", function () {
   mountPlayer(0);
-});
-
-document.getElementById("subtitles").addEventListener("change", function () {
-  const lang = currentLang();
-  rememberLang(lang);
-  const playing = document.getElementById("player");
-  if (playing) mountPlayer(0);
-  const playBtn = document.getElementById("play");
-  if (playBtn) {
-    playBtn.setAttribute(
-      "aria-label",
-      lang === "off" ? "Play Niu Lai, full version, subtitles off" : "Play Niu Lai, full version, subtitles in " + LANG_NAMES[lang]
-    );
-  }
-  const note = document.getElementById("sub-note");
-  if (note) {
-    if (lang === "off") note.textContent = "Subtitles off. You can still turn them on inside the YouTube player.";
-    else if (lang === "en") note.textContent = "English uses the dedicated subtitled upload.";
-    else note.textContent = LANG_NAMES[lang] + " captions are requested on the original upload. If that track is missing, use the player caption menu.";
-  }
-});
-
-document.getElementById("share").addEventListener("click", async function () {
-  const url = window.location.href;
-  const btn = document.getElementById("share");
-  try {
-    if (navigator.share) {
-      await navigator.share({ title: "Niu Lai Watch Tracker", text: "Theatres, public views, and China tickets since 5 August 2026.", url: url });
-      return;
-    }
-    await navigator.clipboard.writeText(url);
-    btn.textContent = "Copied";
-    setTimeout(function () { btn.textContent = "Share tracker"; }, 1600);
-  } catch (error) {
-    if (error && error.name === "AbortError") return;
-    try {
-      await navigator.clipboard.writeText(url);
-      btn.textContent = "Copied";
-      setTimeout(function () { btn.textContent = "Share tracker"; }, 1600);
-    } catch {
-      window.prompt("Copy this link", url);
-    }
-  }
 });
 
 function mountTrends() {
