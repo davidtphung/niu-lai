@@ -169,41 +169,8 @@ body { min-height: 100dvh; }
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 0.85rem 1.25rem;
-}
-.sub-bar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem 1rem;
-}
-.sub-bar label {
-  font-size: 0.8125rem;
-  font-weight: 550;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink);
-}
-.sub-bar select {
-  min-height: 44px;
-  min-width: 12rem;
-  padding: 0.55rem 2.2rem 0.55rem 0.9rem;
-  border: 1px solid var(--line-strong);
-  border-radius: 999px;
-  background: var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23f2f2f2' d='M1 1l5 5 5-5'/%3E%3C/svg%3E") no-repeat right 14px center;
-  color: var(--ink);
-  font-size: 0.875rem;
-  font-weight: 550;
-  appearance: none;
-  cursor: pointer;
-  touch-action: manipulation;
-  transition: border-color 160ms var(--ease), background-color 160ms var(--ease);
-}
-.sub-bar select:hover { border-color: #fff; }
-.sub-bar select:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 3px;
 }
 .jump-nav {
   display: flex;
@@ -231,13 +198,6 @@ body { min-height: 100dvh; }
 .jump-nav a:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 3px;
-}
-.sub-note {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.8125rem;
-  line-height: 1.45;
-  text-wrap: pretty;
 }
 .film-reel {
   display: flex;
@@ -322,12 +282,6 @@ body { min-height: 100dvh; }
 }
 .cinema-line { font-size: 1rem; line-height: 1.4; }
 .cinema-copy { font-size: 0.9375rem; line-height: 1.55; }
-.cinema-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin: 0.15rem 0 0;
-}
 .cinema-action {
   display: inline-flex;
   align-items: center;
@@ -662,9 +616,7 @@ body { min-height: 100dvh; }
   .card-grid-stats,
   .card-grid-3,
   .time-grid { grid-template-columns: 1fr; }
-  .cinema-actions { flex-direction: column; }
   .cinema-action { width: 100%; }
-  .sub-bar select { width: 100%; }
 }
 @media (max-height: 500px) and (orientation: landscape) {
   .cinema-copy { display: none; }
@@ -684,8 +636,7 @@ body { min-height: 100dvh; }
   .source-card,
   .place-card,
   .chip,
-  .jump-nav a,
-  .sub-bar select { transition: none; }
+  .jump-nav a { transition: none; }
   .cinema-play:hover .cinema-play-mark,
   .cinema-play:focus-visible .cinema-play-mark {
     transform: translate(-50%, -50%);
