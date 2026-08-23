@@ -434,22 +434,27 @@ function renderTheatres(filter) {
   THEATRES.filter(function (place) {
     return filter === "all" || place.filter === filter;
   }).forEach(function (place) {
-    const card = document.createElement(place.local ? "a" : "a");
-    card.className = "place-card";
-    card.href = place.href;
-    if (!place.local) {
-      card.target = "_blank";
-      card.rel = "noopener noreferrer";
-    }
-    card.innerHTML =
-      "<p class=\"card-kicker\">" + escapeHtml(place.kicker) + "</p>" +
-      "<h3>" + escapeHtml(place.title) + "</h3>" +
-      "<p class=\"card-value\">" + escapeHtml(place.value) + "</p>" +
-      "<p class=\"card-detail\">" + escapeHtml(place.detail) + "</p>" +
-      "<span class=\"card-link\">" + escapeHtml(place.link) +
-      (place.local ? "" : "<span class=\"sr-only\"> (opens in a new tab)</span>") +
-      "</span>";
-    host.appendChild(card);
+    const row = document.createElement("li");
+    const item = document.createElement("details");
+    item.className = "theatre-item";
+    const extra = place.local ? "" : "<span class=\"sr-only\"> (opens in a new tab)</span>";
+    const target = place.local ? "" : " target=\"_blank\" rel=\"noopener noreferrer\"";
+    item.innerHTML =
+      "<summary>" +
+        "<span class=\"theatre-item-main\">" +
+          "<span class=\"theatre-item-title\">" + escapeHtml(place.title) + "</span>" +
+          "<span class=\"theatre-item-meta\">" + escapeHtml(place.kicker) + "</span>" +
+        "</span>" +
+        "<span class=\"theatre-item-status\">" + escapeHtml(place.value) + "</span>" +
+      "</summary>" +
+      "<div class=\"theatre-item-body\">" +
+        "<p>" + escapeHtml(place.detail) + "</p>" +
+        "<a href=\"" + escapeHtml(place.href) + "\"" + target + ">" +
+          escapeHtml(place.link) + extra +
+        "</a>" +
+      "</div>";
+    row.appendChild(item);
+    host.appendChild(row);
   });
 }
 
