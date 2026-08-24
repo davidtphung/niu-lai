@@ -23,6 +23,14 @@
     <a href="#cinema-screen" class="skip-link">Skip to video</a>
     <a href="#theatres" class="skip-link">Skip to theatres</a>
     <a href="#tracker" class="skip-link">Skip to tracker</a>
+    <a href="#search" class="skip-link">Skip to Google Trends</a>
+
+    <div class="stat-ticker" role="region" aria-label="Niu Lai live stats tape">
+      <p class="sr-only" id="ticker-text">Live totals for public views, tickets, and Google Trends.</p>
+      <div class="stat-ticker-mask">
+        <div class="stat-ticker-track" id="ticker-track"></div>
+      </div>
+    </div>
 
     <main class="cinema">
       <header class="cinema-top">
@@ -34,6 +42,12 @@
       </header>
 
       <article class="cinema-stage">
+        <div class="player-stack">
+        <div class="screen-ticker" aria-hidden="true">
+          <div class="stat-ticker-mask">
+            <div class="stat-ticker-track" id="ticker-track-video"></div>
+          </div>
+        </div>
         <div id="cinema-screen" class="cinema-screen">
           <button type="button" class="cinema-play" id="play" aria-label="Play Niu Lai, full version">
             <img
@@ -50,6 +64,7 @@
               </svg>
             </span>
           </button>
+        </div>
         </div>
         <p class="sr-only" id="status" aria-live="polite"></p>
 
