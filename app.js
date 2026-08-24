@@ -337,6 +337,68 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;");
 }
 
+const TICKER = [
+  { key: "mark", label: "Tape", value: "Niu Lai", kind: "mark", delta: "LIVE" },
+  { key: "all", label: "Public views", value: "…", kind: "up", delta: "▲ TOT" },
+  { key: "yt", label: "YouTube film", value: "…", kind: "up", delta: "LIVE" },
+  { key: "shorts", label: "Shorts", value: "2.6M+", kind: "up", delta: "▲" },
+  { key: "douyin", label: "Douyin topic", value: "2.42B", kind: "up", delta: "▲" },
+  { key: "tickets", label: "China tickets", value: "639,000+", kind: "up", delta: "▲" },
+  { key: "box", label: "Box office", value: "41.31M yuan", kind: "up", delta: "▲" },
+  { key: "visitors", label: "This site", value: "…", kind: "flat", delta: "VISITS" },
+  { key: "day", label: "Since release", value: "Day " + daysSinceRelease(), kind: "flat", delta: "" },
+  {
+    key: "trends",
+    label: "Google Trends",
+    value: "Niu Lai worldwide",
+    kind: "up",
+    delta: "CHART",
+    href: "#search",
+    spark: [8, 10, 12, 28, 54, 92, 100, 78, 66],
+  },
+];
+
+function tickerHtml() {
+  return TICKER.map(function (row) {
+    const spark = row.spark
+      ? "<span class=\"ticker-spark\" aria-hidden=\"true\">" +
+        row.spark.map(function (n) {
+          return "<i style=\"height:" + n + "%\"></i>";
+        }).join("") +
+        "</span>"
+      : "";
+    const delta = row.delta ? "<span class=\"ticker-delta\">" + escapeHtml(row.delta) + "</span>" : "";
+    const inner =
+      "<span class=\"ticker-label\">" + escapeHtml(row.label) + "</span>" +
+      "<span class=\"ticker-value\" data-ticker=\"" + row.key + "\">" + escapeHtml(row.value) + "</span>" +
+      spark + delta;
+    if (row.href) {
+      return "<a class=\"ticker-item is-" + row.kind + "\" href=\"" + escapeHtml(row.href) + "\">" + inner + "</a>";
+    }
+    return "<span class=\"ticker-item is-" + row.kind + "\">" + inner + "</span>";
+  }).join("");
+}
+
+function renderTicker() {
+  const html = tickerHtml() + tickerHtml();
+  ["ticker-track", "ticker-track-video"].forEach(function (id) {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = html;
+  });
+  setText("ticker-text", TICKER.map(function (row) {
+    return row.label + " " + row.value;
+  }).join(". "));
+}
+
+function setTicker(key, value) {
+  document.querySelectorAll("[data-ticker=\"" + key + "\"]").forEach(function (el) {
+    el.textContent = value;
+  });
+  TICKER.forEach(function (row) {
+    if (row.key === key) row.value = value;
+  });
+}
+
 const poster = document.getElementById("poster");
 poster.addEventListener("error", function () {
   if (poster.src !== POSTER_HQ) poster.src = POSTER_HQ;
@@ -345,6 +407,7 @@ poster.addEventListener("error", function () {
 const days = daysSinceRelease();
 setText("days-stat", String(days));
 setText("days-live", "Day " + days + " since release.");
+renderTicker();
 
 async function loadPageViews() {
   const flag = sessionStorage.getItem(seenKey) === "1";
@@ -360,6 +423,7 @@ async function loadPageViews() {
     setText("page-views", shown);
     setText("page-views-stat", shown);
     setText("page-views-bottom", shown);
+    setTicker("visitors", shown);
   } catch {}
 }
 
@@ -413,6 +477,9 @@ function renderSources(rows) {
   setText("net-views", fmt.format(filmTotal));
   setText("short-views", fmt.format(shortTotal) + "+");
   setText("all-views", fmt.format(allTotal) + "+");
+  setTicker("yt", fmt.format(filmTotal));
+  setTicker("shorts", fmt.format(shortTotal) + "+");
+  setTicker("all", fmt.format(allTotal) + "+");
 }
 
 async function loadNetworkViews() {
