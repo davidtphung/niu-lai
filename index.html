@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Niu Lai Watch Tracker</title>
+    <meta name="description" content="Watch Niu Lai. Find theatre locations, public video views, and China ticket counts since 5 August 2026." />
+    <meta name="theme-color" content="#000000" />
+    <meta name="color-scheme" content="dark" />
+    <meta property="og:title" content="Niu Lai Watch Tracker" />
+    <meta property="og:description" content="Watch the film, find theatres, and track public views and China tickets." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://i.ytimg.com/vi/NDOqyb5VSdA/maxresdefault.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://www.youtube.com" />
+    <link rel="preconnect" href="https://i.ytimg.com" />
+    <link rel="preconnect" href="https://api.counterapi.dev" />
+    <link rel="preconnect" href="https://returnyoutubedislikeapi.com" />
+    <link rel="preconnect" href="https://trends.google.com" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <a href="#cinema-screen" class="skip-link">Skip to video</a>
+    <a href="#theatres" class="skip-link">Skip to theatres</a>
+    <a href="#tracker" class="skip-link">Skip to tracker</a>
+    <a href="#search" class="skip-link">Skip to Google Trends</a>
+
+    <div class="stat-ticker" role="region" aria-label="Niu Lai live stats tape">
+      <p class="sr-only" id="ticker-text">Live totals for public views, tickets, and Google Trends.</p>
+      <div class="stat-ticker-mask">
+        <div class="stat-ticker-track" id="ticker-track"></div>
+      </div>
+    </div>
+
+    <main class="cinema">
+      <header class="cinema-top">
+        <p class="cinema-mark">Niu Lai</p>
+        <p class="view-count" aria-live="polite">
+          <span class="view-count-num" id="page-views">…</span>
+          <span> people visited</span>
+        </p>
+      </header>
+
+      <article class="cinema-stage">
+        <div class="player-stack">
+        <div class="screen-ticker" aria-hidden="true">
+          <div class="stat-ticker-mask">
+            <div class="stat-ticker-track" id="ticker-track-video"></div>
+          </div>
+        </div>
+        <div id="cinema-screen" class="cinema-screen">
+          <button type="button" class="cinema-play" id="play" aria-label="Play Niu Lai, full version">
+            <img
+              id="poster"
+              src="https://i.ytimg.com/vi/NDOqyb5VSdA/maxresdefault.jpg"
+              alt=""
+              width="1280"
+              height="720"
+              fetchpriority="high"
+            />
+            <span class="cinema-play-mark" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path d="M10 7.2v13.6L21.2 14 10 7.2Z" fill="currentColor" />
+              </svg>
+            </span>
+          </button>
+        </div>
+        </div>
+        <p class="sr-only" id="status" aria-live="polite"></p>
+
+        <div class="control-row">
+          <nav class="jump-nav" aria-label="On this page">
+            <a href="#theatres">Theatres</a>
+            <a href="#tracker">Tracker</a>
+            <a href="#search">Search</a>
+          </nav>
+        </div>
+
+        <section class="film-reel" id="film-clips" aria-labelledby="reel-heading">
+          <header class="split-head">
+            <h3 id="reel-heading">Shorts on the film clock</h3>
+            <p>
+              Yes — most viral copies are shorts: phone clips from cinemas, TikToks, Reels, and YouTube Shorts of one scene.
+              Each mark sits on the 86-minute runtime. Tap a mark to jump the player there.
+            </p>
+          </header>
+          <div class="reel-shell">
+            <p class="reel-scale"><span>0:00</span><span>43:00</span><span>86:00</span></p>
+            <div id="reel-track" class="reel-track" role="list" aria-label="Viral short clips on the 86-minute film"></div>
+          </div>
+          <p class="reel-readout" id="reel-readout" aria-live="polite">Pick a mark to see the clip, the views, and where it sits in the film.</p>
+          <div id="clip-cards" class="card-grid card-grid-3"></div>
+        </section>
+
+        <div class="cinema-meta">
+          <h1 class="cinema-title"><strong>Niu Lai</strong></h1>
+          <p class="cinema-line">Full version · 86 minutes · watch here or in a theatre</p>
+          <p class="cinema-copy">
+            A handmade animated film by Xin Yumeng and Sun Lifang, a son and his mother.
+            China release 5 August 2026. Play it on this page, or find a cinema below.
+          </p>
+        </div>
+      </article>
+
+      <section id="theatres" class="board" aria-labelledby="theatres-heading">
+        <header class="board-head">
+          <p class="card-kicker">Where to watch</p>
+          <h2 id="theatres-heading">Theatre locations</h2>
+          <p>
+            Cinemas still set their own showtimes. China is in theatres now.
+            Singapore is announced for 1 September 2026. Malaysia has been teased.
+            This page plays the full film online.
+          </p>
+        </header>
+
+        <div class="chip-row" role="group" aria-label="Filter theatre locations">
+          <button type="button" class="chip is-on" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="chip" data-filter="now" aria-pressed="false">Now showing</button>
+          <button type="button" class="chip" data-filter="soon" aria-pressed="false">Coming soon</button>
+          <button type="button" class="chip" data-filter="online" aria-pressed="false">Online</button>
+        </div>
+
+        <ul id="theatre-cards" class="theatre-list"></ul>
+        <p class="board-note">
+          City lists come from booking-app checks and press through mid-August 2026.
+          Dalian pulled the film. Open Maoyan or Tao Piao Piao for tonight’s seats in China.
+        </p>
+      </section>
+
+      <section id="tracker" class="board" aria-labelledby="tracker-heading">
+        <header class="board-head">
+          <p class="card-kicker">Since 5 August 2026</p>
+          <h2 id="tracker-heading">Watch tracker</h2>
+          <p>
+            Public views from every countable internet source, plus documented China tickets.
+            <span id="days-live"></span>
+          </p>
+        </header>
+
+        <ul class="card-grid card-grid-stats">
+          <li class="stat-card">
+            <p class="card-kicker">Internet</p>
+            <h3>Public video views</h3>
+            <p class="stat-value" id="all-views" aria-live="polite">…</p>
+            <p class="card-detail">Full-film YouTube copies plus documented public clips. Live counts refresh while you stay on this page.</p>
+          </li>
+          <li class="stat-card">
+            <p class="card-kicker">Full film</p>
+            <h3>YouTube copies</h3>
+            <p class="stat-value" id="net-views">…</p>
+            <p class="card-detail">Five public full-length uploads. This is the only complete-film total we can count live.</p>
+          </li>
+          <li class="stat-card">
+            <p class="card-kicker">Shorts</p>
+            <h3>Documented clips</h3>
+            <p class="stat-value" id="short-views">2.6M+</p>
+            <p class="card-detail">Countable TikTok and Bilibili clips of the movie or explainers. Douyin topic plays are far larger and listed separately.</p>
+          </li>
+          <li class="stat-card">
+            <p class="card-kicker">Douyin topic</p>
+            <h3>Related short plays</h3>
+            <p class="stat-value">2.42B</p>
+            <p class="card-detail">Xinbang count for related Douyin videos by mid-August, not unique people and not only full scenes. Nationwide topic plays passed 2.7 billion.</p>
+          </li>
+          <li class="stat-card">
+            <p class="card-kicker">China cinemas</p>
+            <h3>Tickets bought</h3>
+            <p class="stat-value" id="ticket-stat">639,000+</p>
+            <p class="card-detail" id="ticket-detail">Maoyan counted 639,000 tickets by 18 August, when the box office was 17.63 million yuan. Later days are published as money, not seats.</p>
+          </li>
+          <li class="stat-card">
+            <p class="card-kicker">First ten days</p>
+            <h3>Opening tickets</h3>
+            <p class="stat-value">278</p>
+            <p class="card-detail">236 buyers in nine days, about 278 by day ten. Opening day was 122 people, 16 of them refunds.</p>
+          </li>
+          <li class="stat-card">
+            <p class="card-kicker">This page</p>
+            <h3>People visited</h3>
+            <p class="stat-value" id="page-views-stat">…</p>
+            <p class="card-detail">How many people opened this site. One count per visit, not every refresh.</p>
+          </li>
+          <li class="stat-card">
+            <p class="card-kicker">Clock</p>
+            <h3>Days since release</h3>
+            <p class="stat-value" id="days-stat">17</p>
+            <p class="card-detail">From the China opening on 5 August 2026. Box office now 41.31 million yuan, about $5.7 million.</p>
+          </li>
+        </ul>
+
+        <div class="split-head">
+          <h3>Source breakdown</h3>
+          <p>Full-film copies first. Shorts, Reels, and TikToks of single scenes are marked on the film clock above.</p>
+        </div>
+        <div id="source-cards" class="card-grid card-grid-3"></div>
+      </section>
+
+      <section class="board" aria-labelledby="budget-heading">
+        <header class="board-head">
+          <p class="card-kicker">How it was made</p>
+          <h2 id="budget-heading">Production</h2>
+        </header>
+        <div class="card-grid card-grid-3">
+          <article class="detail-card">
+            <p class="card-kicker">Crew</p>
+            <h3>Two people</h3>
+            <p class="card-value">Xin Yumeng and Sun Lifang</p>
+            <p class="card-detail">A son and his mother. He animated. She wrote, scored, and acted with him. No studio staff.</p>
+          </article>
+          <article class="detail-card">
+            <p class="card-kicker">Time</p>
+            <h3>Five years</h3>
+            <p class="card-value">2021 to 2026</p>
+            <p class="card-detail">Started in the Year of the Ox. Characters took three to four months. The rest was handmade animation.</p>
+          </article>
+          <article class="detail-card cash-card" aria-labelledby="cash-heading">
+            <p class="card-kicker">Cash</p>
+            <h3 id="cash-heading">Production cost</h3>
+            <div class="fx-bar">
+              <label for="currency">Show in</label>
+              <input id="currency-search" type="search" placeholder="Search any world currency" autocomplete="off" />
+              <select id="currency" autocomplete="off"></select>
+            </div>
+            <p class="stat-value" id="cash-main">Several thousand yuan</p>
+            <p class="card-value" id="cash-range">About $200 to $7,000</p>
+            <p class="card-detail" id="cash-detail">
+              Wikipedia says several thousand yuan. English recaps often cite $200.
+              Some uploads say about $7,000. No outside backers. Pick a currency to convert both figures.
+            </p>
+          </article>
+          <article class="detail-card">
+            <p class="card-kicker">Tools</p>
+            <h3>SketchUp</h3>
+            <p class="card-value">Second-hand hardware, no AI</p>
+            <p class="card-detail">Architectural software instead of a studio pipeline. New computers were too expensive, so they bought used parts online.</p>
+          </article>
+          <article class="detail-card">
+            <p class="card-kicker">Company</p>
+            <h3>Interior design first</h3>
+            <p class="card-value">Registered as media in July 2021</p>
+            <p class="card-detail">Dalian Jingyuan began as a decoration firm. Tianjin Yamazaki still released the film after being told not to.</p>
+          </article>
+          <article class="detail-card">
+            <p class="card-kicker">Runtime</p>
+            <h3>86 minutes</h3>
+            <p class="card-value">Mandarin audio</p>
+            <p class="card-detail">This page plays the English-subbed YouTube upload.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="board" aria-labelledby="release-heading">
+        <header class="board-head">
+          <p class="card-kicker">Theatrical run</p>
+          <h2 id="release-heading">Release</h2>
+        </header>
+        <div class="card-grid card-grid-3">
+          <article class="detail-card">
+            <p class="card-kicker">China</p>
+            <h3>5 August 2026</h3>
+            <p class="card-value">245 theatres, then 4</p>
+            <p class="card-detail">Almost no promotion. By 14 August only four houses were left. The next day screenings jumped from 21 to 359.</p>
+          </article>
+          <article class="detail-card">
+            <p class="card-kicker">Box office</p>
+            <h3>41.31 million yuan</h3>
+            <p class="card-value">About $5.7 million</p>
+            <p class="card-detail">First nine days: 7,169 yuan. Maoyan later forecast 133 to 135 million yuan if the run holds.</p>
+          </article>
+          <article class="detail-card">
+            <p class="card-kicker">Next date</p>
+            <h3>Singapore</h3>
+            <p class="card-value">1 September 2026</p>
+            <p class="card-detail">Announced as the first stop outside China. Showtimes were not locked on booking apps as of 22 August.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="board" aria-labelledby="timeline-heading">
+        <header class="board-head">
+          <p class="card-kicker">What happened</p>
+          <h2 id="timeline-heading">Timeline</h2>
+        </header>
+        <ol class="time-grid">
+          <li class="time-card"><time datetime="2021">2021</time><p>Xin Yumeng starts the film. Sun Lifang writes, scores, and acts with him.</p></li>
+          <li class="time-card"><time datetime="2025-08-25">25 Aug 2025</time><p>China public screening license is issued. No trailer campaign follows.</p></li>
+          <li class="time-card"><time datetime="2026-08-05">5 Aug 2026</time><p>Opens in 245 theatres. Opening day: 122 people, 16 refunds, 3,420 yuan.</p></li>
+          <li class="time-card"><time datetime="2026-08-14">14 Aug 2026</time><p>236 tickets and 7,169 yuan after nine days. Down to four theatres.</p></li>
+          <li class="time-card"><time datetime="2026-08-15">15 Aug 2026</time><p>Mockery turns into demand. Daily screenings jump from 21 to 359, then toward 2,500.</p></li>
+          <li class="time-card"><time datetime="2026-08-16">16 Aug 2026</time><p>157,000 tickets by mid-afternoon. A full-film copy lands on YouTube.</p></li>
+          <li class="time-card"><time datetime="2026-08-18">18 Aug 2026</time><p>Maoyan: 639,000 tickets and 17.63 million yuan. A TikTok explainer passes 1.2 million views.</p></li>
+          <li class="time-card"><time datetime="2026-08-22">22 Aug 2026</time><p>Reported box office 41.31 million yuan. This tracker stays on the public counts.</p></li>
+        </ol>
+      </section>
+
+      <section id="search" class="board" aria-labelledby="search-heading">
+        <header class="board-head">
+          <p class="card-kicker">Lookups</p>
+          <h2 id="search-heading">People looking up <strong class="name">Niu Lai</strong></h2>
+          <p>
+            Public Google Trends, not a private Analytics account.
+            It shows how often people type “<strong class="name">Niu Lai</strong>” worldwide after the China release.
+          </p>
+        </header>
+        <div id="trends-embed" class="trends-frame" role="img" aria-label="Google Trends chart for the search term Niu Lai"></div>
+      </section>
+
+      <footer class="view-dock" aria-labelledby="view-dock-heading">
+        <p class="card-kicker" id="view-dock-heading">Visitor count</p>
+        <p class="view-dock-value" id="page-views-bottom" aria-live="polite">…</p>
+        <p class="view-dock-label">people visited</p>
+        <p class="view-dock-note">How many people came to this site. Refreshing does not add another person.</p>
+      </footer>
+    </main>
+    <script src="./app.js"></script>
+    <script src="https://ssl.gstatic.com/trends_nrtr/4116_RC01/embed_loader.js" defer></script>
+  </body>
+</html>
